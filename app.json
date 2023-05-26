@@ -10,7 +10,7 @@
       "android",
       "web"
     ],
-    "version": "1.13.0",
+    "version": "1.15.0",
     "orientation": "default",
     "icon": "./assets/app/icon.png",
     "splash": {
@@ -24,12 +24,12 @@
     "ios": {
       "bundleIdentifier": "com.draftbit.playground",
       "supportsTablet": null,
-      "buildNumber": "1.13.0",
+      "buildNumber": "1.15.0",
       "infoPlist": {},
       "usesIcloudStorage": false
     },
     "android": {
-      "versionCode": 13,
+      "versionCode": 15,
       "package": "com.draftbit.playground",
       "permissions": []
     },
