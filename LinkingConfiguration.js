@@ -21,15 +21,7 @@ const linking = {
   config: {
     screens: {
       BottomTabNavigator: {
-        screens: {
-          AuthButtonsScreen: {
-            screens: {
-              AuthButtonsScreen: {
-                path: 'AuthButtonsScreen',
-              },
-            },
-          },
-        },
+        screens: {},
       },
     },
   },

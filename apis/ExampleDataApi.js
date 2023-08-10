@@ -7,61 +7,51 @@ import {
 } from 'react-query';
 import useFetch from 'react-fetch-hook';
 import { useIsFocused } from '@react-navigation/native';
+import { handleResponse, isOkStatus } from '../utils/handleRestApiResponse';
 import usePrevious from '../utils/usePrevious';
 import * as GlobalVariables from '../config/GlobalVariableContext';
 
-export const productsGETStatusAndText = Constants =>
+export const productsGET = (Constants, _args, handlers = {}) =>
   fetch(`https://example-data.draftbit.com/products?_limit=10`, {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-  }).then(async res => ({
-    status: res.status,
-    statusText: res.statusText,
-    text: await res.text(),
-  }));
+  }).then(res => handleResponse(res, handlers));
 
-export const productsGET = Constants =>
-  productsGETStatusAndText(Constants).then(({ status, statusText, text }) => {
-    try {
-      return JSON.parse(text);
-    } catch (e) {
-      console.error(
-        [
-          'Failed to parse response text as JSON.',
-          `Error: ${e.message}`,
-          `Text: ${JSON.stringify(text)}`,
-        ].join('\n\n')
-      );
-    }
-  });
-
-export const useProductsGET = () => {
+export const useProductsGET = (
+  args = {},
+  { refetchInterval, handlers = {} } = {}
+) => {
   const Constants = GlobalVariables.useValues();
-  const isFocused = useIsFocused();
-
-  return useFetch(`https://example-data.draftbit.com/products?_limit=10`, {
-    depends: [isFocused],
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-  });
+  const queryClient = useQueryClient();
+  return useQuery(
+    ['exampleDataProductsGET', args],
+    () => productsGET(Constants, args, handlers),
+    {
+      refetchInterval,
+      onSuccess: () =>
+        queryClient.invalidateQueries(['exampleDataProductsGETS']),
+    }
+  );
 };
 
 export const FetchProductsGET = ({
   children,
   onData = () => {},
+  handlers = {},
   refetchInterval,
 }) => {
   const Constants = GlobalVariables.useValues();
   const isFocused = useIsFocused();
   const prevIsFocused = usePrevious(isFocused);
 
-  const refetch = () => {};
   const {
     isLoading: loading,
     data,
     error,
-  } = useFetch(`https://example-data.draftbit.com/products?_limit=10`, {
-    depends: [isFocused],
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-  });
+    refetch,
+  } = useProductsGET(
+    {},
+    { refetchInterval, handlers: { onData, ...handlers } }
+  );
 
   React.useEffect(() => {
     if (!prevIsFocused && isFocused) {
@@ -75,11 +65,5 @@ export const FetchProductsGET = ({
       console.error(error);
     }
   }, [error]);
-  React.useEffect(() => {
-    if (data) {
-      onData(data);
-    }
-  }, [data]);
-
   return children({ loading, data, error, refetchProducts: refetch });
 };

@@ -10,7 +10,7 @@
       "android",
       "web"
     ],
-    "version": "1.15.0",
+    "version": "1.22.0",
     "orientation": "default",
     "icon": "./assets/app/icon.png",
     "splash": {
@@ -24,14 +24,31 @@
     "ios": {
       "bundleIdentifier": "com.draftbit.playground",
       "supportsTablet": null,
-      "buildNumber": "1.15.0",
+      "buildNumber": "1.22.0",
       "infoPlist": {},
       "usesIcloudStorage": false
     },
     "android": {
-      "versionCode": 15,
+      "versionCode": 22,
       "package": "com.draftbit.playground",
-      "permissions": []
+      "permissions": [],
+      "googleServicesFile": "config/google-services.json",
+      "adaptiveIcon": {
+        "foregroundImage": "https://assets.draftbit.app/apps/DhDM0GRf/assets/9LZp1mjKldYFz-Clmtbwd",
+        "monochromeImage": null,
+        "backgroundColor": "#ec0cb6"
+      }
+    },
+    "androidStatusBar": {
+      "hidden": null,
+      "barStyle": null,
+      "translucent": null,
+      "backgroundColor": null
+    },
+    "androidNavigationBar": {
+      "visible": null,
+      "barStyle": null,
+      "backgroundColor": null
     },
     "web": {
       "display": null,

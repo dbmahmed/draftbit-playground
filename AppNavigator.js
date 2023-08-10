@@ -8,8 +8,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import theme from './themes/DraftbitTheme.js';
 import LinkingConfiguration from './LinkingConfiguration.js';
 
-import AuthButtonsScreen from './screens/AuthButtonsScreen';
+import BlankScreen from './screens/BlankScreen';
+import CodeInputDemoScreen from './screens/CodeInputDemoScreen';
 import ContactsPermissionsScreen from './screens/ContactsPermissionsScreen';
+import MapClusterDemoScreen from './screens/MapClusterDemoScreen';
 import NotificationsPermissionsScreen from './screens/NotificationsPermissionsScreen';
 import Web3AuthDemoScreen from './screens/Web3AuthDemoScreen';
 
@@ -74,13 +76,6 @@ function BottomTabNavigator() {
       }}
     >
       <Tab.Screen
-        name="AuthButtonsScreen"
-        component={AuthButtonsScreen}
-        options={{
-          title: 'Auth Buttons',
-        }}
-      />
-      <Tab.Screen
         name="NotificationsPermissionsScreen"
         component={NotificationsPermissionsScreen}
         options={{
@@ -108,7 +103,31 @@ function BottomTabNavigator() {
 export default function RootAppNavigator() {
   return (
     <NavigationContainer linking={LinkingConfiguration}>
-      <Stack.Navigator initialRouteName="CameraPermissionsScreen">
+      <Stack.Navigator
+        headerMode="none"
+        initialRouteName="CameraPermissionsScreen"
+      >
+        <Stack.Screen
+          name="BlankScreen"
+          component={BlankScreen}
+          options={{
+            title: 'Blank',
+          }}
+        />
+        <Stack.Screen
+          name="CodeInputDemoScreen"
+          component={CodeInputDemoScreen}
+          options={{
+            title: 'CodeInput Demo',
+          }}
+        />
+        <Stack.Screen
+          name="MapClusterDemoScreen"
+          component={MapClusterDemoScreen}
+          options={{
+            title: 'Map Cluster Demo',
+          }}
+        />
         <Stack.Screen
           name="BottomTabNavigator"
           component={BottomTabNavigator}

@@ -1,7 +1,10 @@
 import React from 'react';
+import * as GlobalStyles from '../GlobalStyles.js';
 import * as GlobalVariables from '../config/GlobalVariableContext';
 import * as CustomCode from '../custom-files/CustomCode';
-import { ScreenContainer, withTheme } from '@draftbit/ui';
+import Breakpoints from '../utils/Breakpoints';
+import * as StyleSheet from '../utils/StyleSheet';
+import { ScreenContainer, TextInput, withTheme } from '@draftbit/ui';
 import { useWindowDimensions } from 'react-native';
 
 const Web3AuthDemoScreen = props => {
@@ -34,9 +37,30 @@ const Web3AuthDemoScreen = props => {
   const { theme } = props;
 
   const [tagsArray, setTagsArray] = React.useState([]);
+  const [textInputValue, setTextInputValue] = React.useState('');
   const [token, setToken] = React.useState('');
 
-  return <ScreenContainer scrollable={false} hasSafeArea={false} />;
+  return (
+    <ScreenContainer hasSafeArea={false} scrollable={false}>
+      <TextInput
+        onChangeText={newTextInputValue => {
+          const textInputValue = newTextInputValue;
+          try {
+            setTextInputValue(newTextInputValue);
+          } catch (err) {
+            console.error(err);
+          }
+        }}
+        style={StyleSheet.applyWidth(
+          GlobalStyles.TextInputStyles(theme)['Text Input'],
+          dimensions.width
+        )}
+        value={textInputValue}
+        autoCapitalize={'none'}
+        placeholder={'Enter a value...'}
+      />
+    </ScreenContainer>
+  );
 };
 
 export default withTheme(Web3AuthDemoScreen);

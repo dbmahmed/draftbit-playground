@@ -59,7 +59,7 @@ const ContactsPermissionsScreen = props => {
   const [result, setResult] = React.useState('');
 
   return (
-    <ScreenContainer scrollable={false} hasSafeArea={false}>
+    <ScreenContainer hasSafeArea={false} scrollable={false}>
       <View
         style={StyleSheet.applyWidth({ flex: 1, margin: 20 }, dimensions.width)}
       >

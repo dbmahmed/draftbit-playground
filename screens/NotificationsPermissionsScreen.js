@@ -50,7 +50,7 @@ const NotificationsPermissionsScreen = props => {
   const [status, setStatus] = React.useState('');
 
   return (
-    <ScreenContainer scrollable={false} hasSafeArea={false}>
+    <ScreenContainer hasSafeArea={false} scrollable={false}>
       <View
         style={StyleSheet.applyWidth(
           { flex: 1, flexDirection: 'column', padding: 20 },
@@ -88,8 +88,8 @@ const NotificationsPermissionsScreen = props => {
         </Text>
       </View>
       <KeyboardAwareScrollView
-        showsVerticalScrollIndicator={true}
         keyboardShouldPersistTaps={'never'}
+        showsVerticalScrollIndicator={true}
       />
     </ScreenContainer>
   );

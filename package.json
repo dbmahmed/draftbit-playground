@@ -17,8 +17,8 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@draftbit/maps": "47.3.4",
-    "@draftbit/ui": "47.3.4",
+    "@draftbit/maps": "47.7.7",
+    "@draftbit/ui": "47.7.7",
     "@expo/dev-server": "0.1.120",
     "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^0.17.2",
@@ -77,13 +77,14 @@
     "react-native-web": "~0.18.9",
     "react-native-web-swiper": "^2.2.3",
     "react-native-webview": "11.23.1",
-    "react-query": "^3.39.2",
+    "react-query": "^3.39.3",
     "react-request": "3.2.0"
   },
   "resolutions": {
     "react-native-web": "0.18.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.3"
+    "@babel/core": "^7.19.3",
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9"
   }
 }
