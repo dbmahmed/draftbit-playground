@@ -21,7 +21,15 @@ const linking = {
   config: {
     screens: {
       BottomTabNavigator: {
-        screens: {},
+        screens: {
+          AzureAuthScreen: {
+            screens: {
+              AzureAuthScreen: {
+                path: 'AzureAuthScreen',
+              },
+            },
+          },
+        },
       },
     },
   },

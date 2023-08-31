@@ -55,7 +55,6 @@ const ContactsPermissionsScreen = props => {
     };
     handler();
   }, [isFocused]);
-
   const [result, setResult] = React.useState('');
 
   return (

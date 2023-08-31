@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import theme from './themes/DraftbitTheme.js';
 import LinkingConfiguration from './LinkingConfiguration.js';
 
+import AzureAuthScreen from './screens/AzureAuthScreen';
 import BlankScreen from './screens/BlankScreen';
 import CodeInputDemoScreen from './screens/CodeInputDemoScreen';
 import ContactsPermissionsScreen from './screens/ContactsPermissionsScreen';
@@ -71,6 +72,7 @@ function Placeholder() {
 function BottomTabNavigator() {
   return (
     <Tab.Navigator
+      initialRouteName="AzureAuthScreen"
       tabBarOptions={{
         style: { borderTopColor: 'transparent' },
       }}
@@ -80,6 +82,14 @@ function BottomTabNavigator() {
         component={NotificationsPermissionsScreen}
         options={{
           title: 'Notifications Permissions',
+          tabBarIcon: ({ focused, color }) => (
+            <Icon
+              name="EvilIcons/bell"
+              size={25}
+              color={focused ? color : color}
+            />
+          ),
+          tabBarLabel: 'Notifications',
         }}
       />
       <Tab.Screen
@@ -87,6 +97,14 @@ function BottomTabNavigator() {
         component={ContactsPermissionsScreen}
         options={{
           title: 'Contacts Permissions',
+          tabBarIcon: ({ focused, color }) => (
+            <Icon
+              name="AntDesign/contacts"
+              size={25}
+              color={focused ? color : color}
+            />
+          ),
+          tabBarLabel: 'Contacts',
         }}
       />
       <Tab.Screen
@@ -94,6 +112,29 @@ function BottomTabNavigator() {
         component={Web3AuthDemoScreen}
         options={{
           title: 'Web3AuthDemo',
+          tabBarIcon: ({ focused, color }) => (
+            <Icon
+              name="MaterialCommunityIcons/webpack"
+              size={25}
+              color={focused ? color : color}
+            />
+          ),
+          tabBarLabel: 'Web3Auth',
+        }}
+      />
+      <Tab.Screen
+        name="AzureAuthScreen"
+        component={AzureAuthScreen}
+        options={{
+          title: 'Azure Auth',
+          tabBarIcon: ({ focused, color }) => (
+            <Icon
+              name="MaterialCommunityIcons/microsoft-azure"
+              size={25}
+              color={focused ? color : color}
+            />
+          ),
+          tabBarLabel: 'Azure',
         }}
       />
     </Tab.Navigator>
@@ -103,10 +144,7 @@ function BottomTabNavigator() {
 export default function RootAppNavigator() {
   return (
     <NavigationContainer linking={LinkingConfiguration}>
-      <Stack.Navigator
-        headerMode="none"
-        initialRouteName="CameraPermissionsScreen"
-      >
+      <Stack.Navigator headerMode="none" initialRouteName="BottomTabNavigator">
         <Stack.Screen
           name="BlankScreen"
           component={BlankScreen}

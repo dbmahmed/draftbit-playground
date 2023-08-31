@@ -23,8 +23,8 @@ const MapClusterDemoScreen = props => {
           GlobalStyles.MapViewStyles(theme)['Map View'],
           dimensions.width
         )}
-        longitude={70}
         latitude={70}
+        longitude={70}
         apiKey={'AIzaSyBzktToWosjNgrrUawZnbslB9NSXSXCkwo'}
         autoClusterMarkers={true}
         autoClusterMarkersDistanceMeters={10000}
@@ -37,11 +37,11 @@ const MapClusterDemoScreen = props => {
         zoomEnabled={true}
       >
         <MapMarkerCluster>
-          <MapMarker latitude={70} longitude={70} pinImageSize={50} />
+          <MapMarker longitude={70} latitude={70} pinImageSize={50} />
           {/* Map Marker 2 */}
-          <MapMarker latitude={70} longitude={70.5} pinImageSize={50} />
+          <MapMarker longitude={70.5} latitude={70} pinImageSize={50} />
           {/* Map Marker 3 */}
-          <MapMarker latitude={70} longitude={71} pinImageSize={50} />
+          <MapMarker longitude={71} latitude={70} pinImageSize={50} />
           <MapMarkerClusterView
             renderItem={({ markerCount }) => {
               return (
@@ -67,16 +67,16 @@ const MapClusterDemoScreen = props => {
           />
         </MapMarkerCluster>
         <MapMarker
+          longitude={80}
           title={'Title'}
           latitude={80}
-          longitude={80}
           pinImageSize={50}
         />
         {/* Map Marker 2 */}
         <MapMarker
+          longitude={80.5}
           title={'Title 2'}
           latitude={80}
-          longitude={80.5}
           pinImageSize={50}
         />
       </MapView>
