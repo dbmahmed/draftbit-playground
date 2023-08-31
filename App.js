@@ -13,7 +13,6 @@ import AppNavigator from './AppNavigator';
 import DraftbitTheme from './themes/DraftbitTheme.js';
 import cacheAssetsAsync from './config/cacheAssetsAsync';
 import { GlobalVariableProvider } from './config/GlobalVariableContext';
-import { useFonts } from 'expo-font';
 SplashScreen.preventAutoHideAsync();
 
 Notifications.setNotificationHandler({
@@ -28,10 +27,7 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const [isReady, setIsReady] = React.useState(false);
-  const [fontsLoaded] = useFonts({
-    AdventPro_400Regular:
-      'https://fonts.gstatic.com/s/adventpro/v23/V8mqoQfxVT4Dvddr_yOwrzaFxV7JtdQgFqXdUAQrGp_zgX5sWCpLQyNPTJoonw1aBA.ttf',
-  });
+  const fontsLoaded = true;
 
   React.useEffect(() => {
     async function prepare() {

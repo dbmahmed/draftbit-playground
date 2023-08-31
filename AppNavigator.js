@@ -10,7 +10,6 @@ import LinkingConfiguration from './LinkingConfiguration.js';
 
 import AzureAuthScreen from './screens/AzureAuthScreen';
 import BlankScreen from './screens/BlankScreen';
-import CodeInputDemoScreen from './screens/CodeInputDemoScreen';
 import ContactsPermissionsScreen from './screens/ContactsPermissionsScreen';
 import MapClusterDemoScreen from './screens/MapClusterDemoScreen';
 import NotificationsPermissionsScreen from './screens/NotificationsPermissionsScreen';
@@ -150,13 +149,6 @@ export default function RootAppNavigator() {
           component={BlankScreen}
           options={{
             title: 'Blank',
-          }}
-        />
-        <Stack.Screen
-          name="CodeInputDemoScreen"
-          component={CodeInputDemoScreen}
-          options={{
-            title: 'CodeInput Demo',
           }}
         />
         <Stack.Screen

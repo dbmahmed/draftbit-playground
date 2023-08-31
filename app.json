@@ -10,7 +10,7 @@
       "android",
       "web"
     ],
-    "version": "1.32.0",
+    "version": "1.33.0",
     "orientation": "default",
     "icon": "./assets/app/icon.png",
     "splash": {
@@ -23,12 +23,12 @@
     ],
     "ios": {
       "bundleIdentifier": "com.draftbit.playground",
-      "buildNumber": "1.32.0",
+      "buildNumber": "1.33.0",
       "infoPlist": {},
       "usesIcloudStorage": false
     },
     "android": {
-      "versionCode": 32,
+      "versionCode": 33,
       "package": "com.draftbit.playground",
       "permissions": [],
       "googleServicesFile": "config/google-services.json",
