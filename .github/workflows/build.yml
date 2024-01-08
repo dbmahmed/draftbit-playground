@@ -51,7 +51,7 @@ jobs:
         if: ${{ env.BUILD_STATUS == 0 }}
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18.x
 
       - name: Install Dependencies
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'

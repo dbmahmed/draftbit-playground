@@ -4,16 +4,18 @@ import * as GlobalVariables from '../config/GlobalVariableContext';
 import * as CustomCode from '../custom-files/CustomCode';
 import Breakpoints from '../utils/Breakpoints';
 import * as StyleSheet from '../utils/StyleSheet';
+import useWindowDimensions from '../utils/useWindowDimensions';
 import { Button, ScreenContainer, withTheme } from '@draftbit/ui';
 import * as Notifications from 'expo-notifications';
-import { Text, View, useWindowDimensions } from 'react-native';
+import { Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const NotificationsPermissionsScreen = props => {
+  const { theme } = props;
   const dimensions = useWindowDimensions();
   const Constants = GlobalVariables.useValues();
   const Variables = Constants;
-
+  const [status, setStatus] = React.useState('');
   const registerPushNotifications = async () => {
     let token;
     console.log('register notificaitons');
@@ -45,9 +47,13 @@ const NotificationsPermissionsScreen = props => {
     // }
   };
 
-  const { theme } = props;
-
-  const [status, setStatus] = React.useState('');
+  const myFunctionName = navigation => {
+    // Type the code for the body of your function or hook here.
+    // Functions can be triggered via Button/Touchable actions.
+    // Hooks are run per ReactJS rules.
+    /* String line breaks are accomplished with backticks ( example: `line one
+line two` ) and will not work with special characters inside of quotes ( example: "line one line two" ) */
+  };
 
   return (
     <ScreenContainer hasSafeArea={false} scrollable={false}>

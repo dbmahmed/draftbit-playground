@@ -16,6 +16,9 @@ module.exports = async function (env, argv) {
   // Added at Customer Request to fix Victory Charts for Web Apps
   config.resolve.alias['victory-native'] = 'victory';
 
+  // Added at Customer Request to fix Stripe for Web Apps
+  config.resolve.alias['@stripe/stripe-react-native'] = '@stripe/stripe-js';
+
   // Expo's default is to enable these options, which results in somewhat
   // confusing behavior: You might know you updated your app, but have to
   // arbitrarily refresh a lot before you see the newer version.  In the

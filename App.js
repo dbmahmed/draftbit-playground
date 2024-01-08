@@ -10,9 +10,10 @@ import { Provider as ThemeProvider } from '@draftbit/ui';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import AppNavigator from './AppNavigator';
-import DraftbitTheme from './themes/DraftbitTheme.js';
+import Draftbit from './themes/Draftbit.js';
 import cacheAssetsAsync from './config/cacheAssetsAsync';
 import { GlobalVariableProvider } from './config/GlobalVariableContext';
+import { useFonts } from 'expo-font';
 SplashScreen.preventAutoHideAsync();
 
 Notifications.setNotificationHandler({
@@ -25,9 +26,32 @@ Notifications.setNotificationHandler({
 
 const queryClient = new QueryClient();
 
+// import TrackPlayer from 'react-native-track-player'
+// TrackPlayer.registerPlaybackService(() => require('./custom-files/services'));
+
 const App = () => {
-  const [isReady, setIsReady] = React.useState(false);
-  const fontsLoaded = true;
+  const [areAssetsCached, setAreAssetsCached] = React.useState(false);
+
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular:
+      'https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrFJDUc1NECPY.ttf',
+  });
+  const [fontsTimedOut, setFontsTimedOut] = React.useState(false);
+  const [fontTimer, setFontTimer] = React.useState(null);
+  React.useEffect(() => {
+    if (fontsLoaded && fontTimer) {
+      clearTimeout(fontTimer);
+      setFontsTimedOut(false);
+    }
+    if (!fontsLoaded && !fontTimer) {
+      const timer = setTimeout(() => {
+        console.warn('Timed out waiting for fonts to load');
+        setFontsTimedOut(true);
+      }, 10000);
+      setFontTimer(timer);
+      return () => clearTimeout(timer);
+    }
+  }, [fontsLoaded, fontTimer]);
 
   React.useEffect(() => {
     async function prepare() {
@@ -36,20 +60,21 @@ const App = () => {
       } catch (e) {
         console.warn(e);
       } finally {
-        setIsReady(true);
+        setAreAssetsCached(true);
       }
     }
 
     prepare();
   }, []);
 
+  const isReady = areAssetsCached && (fontsLoaded || fontsTimedOut);
   const onLayoutRootView = React.useCallback(async () => {
-    if (isReady && fontsLoaded) {
+    if (isReady) {
       await SplashScreen.hideAsync();
     }
-  }, [isReady, fontsLoaded]);
+  }, [isReady]);
 
-  if (!isReady || !fontsLoaded) {
+  if (!isReady) {
     return null;
   }
 
@@ -60,7 +85,7 @@ const App = () => {
     >
       <GlobalVariableProvider>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={DraftbitTheme}>
+          <ThemeProvider theme={Draftbit}>
             <AppNavigator />
           </ThemeProvider>
         </QueryClientProvider>

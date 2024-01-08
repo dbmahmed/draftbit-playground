@@ -12,7 +12,7 @@ export const handleResponse = async (res, handlers = {}) => {
         'Failed to parse response text as JSON.',
         `Error: ${e.message}`,
         `Text: ${JSON.stringify(text)}`,
-      ].join('\n\n')
+      ].join(' ')
     );
   }
 

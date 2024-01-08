@@ -1,4 +1,4 @@
-import * as Contacts from 'expo-contacts';
-import * as Device from 'expo-device';
+// import * as Contacts from 'expo-contacts';
+// import * as Device from 'expo-device';
 
-export { Contacts, Device };
+// export {Contacts, Device}

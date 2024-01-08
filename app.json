@@ -10,7 +10,7 @@
       "android",
       "web"
     ],
-    "version": "1.33.0",
+    "version": "1.75.0",
     "orientation": "default",
     "icon": "./assets/app/icon.png",
     "splash": {
@@ -21,14 +21,26 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [],
     "ios": {
       "bundleIdentifier": "com.draftbit.playground",
-      "buildNumber": "1.33.0",
-      "infoPlist": {},
-      "usesIcloudStorage": false
+      "supportsTablet": true,
+      "buildNumber": "1.75.0",
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "audio"
+        ],
+        "NSCameraUsageDescription": "This app uses the camera to scan barcodes on event tickets.",
+        "NSMicrophoneUsageDescription": "This app uses the microphone to enable audio chat with others",
+        "NSBluetoothAlwaysUsageDescription": "Our app requires Bluetooth to connect with energy devices, enabling efficient device management and enhanced user experience."
+      },
+      "usesIcloudStorage": false,
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
-      "versionCode": 33,
+      "versionCode": 75,
       "package": "com.draftbit.playground",
       "permissions": [],
       "googleServicesFile": "config/google-services.json",
@@ -41,6 +53,9 @@
     },
     "notification": {
       "androidMode": "default"
+    },
+    "extra": {
+      "eas": {}
     }
   }
 }

@@ -6,6 +6,7 @@
 
 import * as Linking from 'expo-linking';
 import { Platform } from 'react-native';
+
 function renderLinkingPrefix() {
   try {
     return Linking.createURL('/');
@@ -15,19 +16,16 @@ function renderLinkingPrefix() {
 }
 
 const prefix = renderLinkingPrefix();
+
 const linking = {
   enabled: Platform.OS === 'web' ? false : true,
   prefixes: [prefix],
   config: {
     screens: {
-      BottomTabNavigator: {
+      MarufAzureADB2CAuthScreen: {
         screens: {
-          AzureAuthScreen: {
-            screens: {
-              AzureAuthScreen: {
-                path: 'AzureAuthScreen',
-              },
-            },
+          MarufAzureADB2CAuthScreen: {
+            path: 'MarufAzureADB2CAuthScreen/:code?',
           },
         },
       },

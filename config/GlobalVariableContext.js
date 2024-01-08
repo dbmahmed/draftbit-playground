@@ -3,8 +3,25 @@ import { View, ActivityIndicator } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DeviceVariables = { auth_token: '', newuser: '', user: {} };
-const AppVariables = {
+export const DeviceVariables = {
+  AZURE_ANDROID_CLIENT_ID: 'a02fb6f1-75f6-4493-8631-c63ea24939cd',
+  AZURE_ANDROID_REDIRECT_URL:
+    'msauth://co.uk.driveelectric.app/4%2B5wCp8QcLptlO0aeP5RDTTOWyg%3D',
+  AZURE_AUTH_URL:
+    'https://login-dev.drive-electric.co.uk/tfp/delectricb2cdev.onmicrosoft.com/b2c_1a_signin/v2.0/',
+  AZURE_BRANDED_URL: 'https://login-dev.drive-electric.co.uk',
+  AZURE_CLIENT_ID: 'cb0039b6-a245-4095-905a-f22a9456bca5',
+  AZURE_PROJECT_ID: 'babba09b-0cc3-4c75-b675-8e3595d54b2a',
+  AZURE_REDIRECT_URL: 'msauth.com.crowdcharge.temp://auth',
+  auth_token: '',
+  newuser: '',
+  user: {},
+  __env__: 'Development',
+};
+export const AppVariables = {
+  'Bearer Token': 'UNSET',
+  ENODE_LINK_UI_TOKEN:
+    'eyJsaW5rVXJsIjoiaHR0cHM6Ly9saW5rLmVub2RlLmNvbS9leUpsYm5ZaU9pSndjbTlrZFdOMGFXOXVJaXdpYkdsdWExTjBZWFJsSWpvaVRtMUZNRTVFUlhwTlZGbDBUVVJyTlU1NU1EQk5ha0Y2VEZSbk0xcEVWWFJOUkdNMVQxUk9hMDlVWkcxTmFtdDZVVWRGZWxsVVFtcGFiVkUwVEZSamQxbHFSWFJPUkdONVRta3hhVTFVWnpWTVYxRjNXbGRGTUZwRVkzZFpiVkV3V1ZSd2FVMHlVWGROUkUwMFdYcG9iVmw2V1hwT1JHTXhUWHBuTUU0eVVteE9SMVpyVG5wamVFNTZVWGxOZWxKdFRsUkNiRTFFUW1oTmVtc3pUa2RHYTAxNlFURlpWR1JxVDFSWk1FMVVaekpOYlVwc1dsZFdhQ0lzSW5KbFpHbHlaV04wVlhKcElqb2llVzkxY21Gd2NEb3ZMMmx1ZEdWbmNtRjBhVzl1Y3k5bGJtOWtaU0lzSW1Oc2FXVnVkRTVoYldVaU9pSkRjbTkzWkVOb1lYSm5aU0o5IiwicmVkaXJlY3RVcmkiOiJ5b3VyYXBwOi8vaW50ZWdyYXRpb25zL2Vub2RlIn0=',
   FACEBOOK_APP_ID: 909511156829945,
   GOOGLE_ANDROID_CLIENT_ID: '',
   GOOGLE_IOS_CLIENT_ID:
@@ -108,7 +125,21 @@ export function GlobalVariableProvider({ children }) {
     async function initialStorageLoader() {
       try {
         const payload = await GlobalVariable.loadLocalStorage();
-        dispatch({ type: 'LOAD_FROM_ASYNC_STORAGE', payload });
+        if (
+          payload?.__env__ &&
+          DeviceVariables.__env__ &&
+          payload.__env__ !== DeviceVariables.__env__
+        ) {
+          console.log(
+            `Publication Environment changed from ${payload.__env__} to ${DeviceVariables.__env__}. Refreshing variables`
+          );
+          dispatch({
+            type: 'LOAD_FROM_ASYNC_STORAGE',
+            payload: DeviceVariables,
+          });
+        } else {
+          dispatch({ type: 'LOAD_FROM_ASYNC_STORAGE', payload });
+        }
       } catch (err) {
         console.error(err);
       }

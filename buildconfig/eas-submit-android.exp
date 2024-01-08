@@ -1,0 +1,26 @@
+set timeout 2100
+spawn eas submit -p android --latest
+match_max 100000
+
+expect {
+    "*Submitted your app*" {
+        send_user "*** DRAFTBIT - SUBMISSION SUCCEEDED ***"
+        exit 0
+        }
+    "*Something went wrong*" {
+        send_user "*** DRAFTBIT - SUBMISSION FAILED ***"
+        exit 1
+        }
+    "*The submission has been canceled*" {
+        send_user "*** DRAFTBIT - SUBMISSION CANCELED ***"
+        exit 0
+        }
+    timeout {
+        send_user "*** DRAFTBIT - SUBMISSION TIMEOUT ***"
+        exit 1
+        }
+    eof {
+        send_user "*** DRAFTBIT - EOF ***"
+        exit 1
+        }
+}

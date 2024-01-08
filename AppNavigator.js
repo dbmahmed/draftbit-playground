@@ -5,145 +5,37 @@ import { Icon, Touchable } from '@draftbit/ui';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import theme from './themes/DraftbitTheme.js';
+import theme from './themes/Draftbit.js';
 import LinkingConfiguration from './LinkingConfiguration.js';
 
-import AzureAuthScreen from './screens/AzureAuthScreen';
+import AdmobScreen from './screens/AdmobScreen';
+import AmitAKVScreen from './screens/AmitAKVScreen';
+import AmitKASVScreen from './screens/AmitKASVScreen';
+import AmitKAVHeightScreen from './screens/AmitKAVHeightScreen';
 import BlankScreen from './screens/BlankScreen';
-import ContactsPermissionsScreen from './screens/ContactsPermissionsScreen';
-import MapClusterDemoScreen from './screens/MapClusterDemoScreen';
+import MarufAzureADB2CAuthScreen from './screens/MarufAzureADB2CAuthScreen';
+import MarufEnodeLinkUITestScreen from './screens/MarufEnodeLinkUITestScreen';
+import MarufTestImageBGScreen from './screens/MarufTestImageBGScreen';
 import NotificationsPermissionsScreen from './screens/NotificationsPermissionsScreen';
-import Web3AuthDemoScreen from './screens/Web3AuthDemoScreen';
+import SefaReactNativeTrackPlayerScreen from './screens/SefaReactNativeTrackPlayerScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Placeholder() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: '#131A2A',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 36,
-      }}
-    >
-      <Text
-        style={{
-          textAlign: 'center',
-          fontSize: 24,
-          fontWeight: 'bold',
-          marginBottom: 12,
-          color: '#FFF',
-        }}
-      >
-        Missing Screen
-      </Text>
-      <Text
-        style={{
-          textAlign: 'center',
-          fontSize: 16,
-          color: '#FFF',
-          marginBottom: 8,
-        }}
-      >
-        This screen is not in a navigator.
-      </Text>
-      <Text
-        style={{
-          textAlign: 'center',
-          fontSize: 16,
-          color: '#FFF',
-          marginBottom: 8,
-        }}
-      >
-        Go to Navigation mode, and click the + (plus) icon in the Navigator tab
-        on the left side to add this screen to a Navigator.
-      </Text>
-      <Text style={{ textAlign: 'center', fontSize: 16, color: '#FFF' }}>
-        If the screen is in a Tab Navigator, make sure the screen is assigned to
-        a tab in the Config panel on the right.
-      </Text>
-    </View>
-  );
-}
-function BottomTabNavigator() {
-  return (
-    <Tab.Navigator
-      initialRouteName="AzureAuthScreen"
-      tabBarOptions={{
-        style: { borderTopColor: 'transparent' },
-      }}
-    >
-      <Tab.Screen
-        name="NotificationsPermissionsScreen"
-        component={NotificationsPermissionsScreen}
-        options={{
-          title: 'Notifications Permissions',
-          tabBarIcon: ({ focused, color }) => (
-            <Icon
-              name="EvilIcons/bell"
-              size={25}
-              color={focused ? color : color}
-            />
-          ),
-          tabBarLabel: 'Notifications',
-        }}
-      />
-      <Tab.Screen
-        name="ContactsPermissionsScreen"
-        component={ContactsPermissionsScreen}
-        options={{
-          title: 'Contacts Permissions',
-          tabBarIcon: ({ focused, color }) => (
-            <Icon
-              name="AntDesign/contacts"
-              size={25}
-              color={focused ? color : color}
-            />
-          ),
-          tabBarLabel: 'Contacts',
-        }}
-      />
-      <Tab.Screen
-        name="Web3AuthDemoScreen"
-        component={Web3AuthDemoScreen}
-        options={{
-          title: 'Web3AuthDemo',
-          tabBarIcon: ({ focused, color }) => (
-            <Icon
-              name="MaterialCommunityIcons/webpack"
-              size={25}
-              color={focused ? color : color}
-            />
-          ),
-          tabBarLabel: 'Web3Auth',
-        }}
-      />
-      <Tab.Screen
-        name="AzureAuthScreen"
-        component={AzureAuthScreen}
-        options={{
-          title: 'Azure Auth',
-          tabBarIcon: ({ focused, color }) => (
-            <Icon
-              name="MaterialCommunityIcons/microsoft-azure"
-              size={25}
-              color={focused ? color : color}
-            />
-          ),
-          tabBarLabel: 'Azure',
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
-
 export default function RootAppNavigator() {
   return (
     <NavigationContainer linking={LinkingConfiguration}>
-      <Stack.Navigator headerMode="none" initialRouteName="BottomTabNavigator">
+      <Stack.Navigator
+        initialRouteName="SefaReactNativeTrackPlayerScreen"
+        screenOptions={{ headerMode: 'none' }}
+      >
+        <Stack.Screen
+          name="NotificationsPermissionsScreen"
+          component={NotificationsPermissionsScreen}
+          options={{
+            title: 'Notifications Permissions',
+          }}
+        />
         <Stack.Screen
           name="BlankScreen"
           component={BlankScreen}
@@ -152,71 +44,62 @@ export default function RootAppNavigator() {
           }}
         />
         <Stack.Screen
-          name="MapClusterDemoScreen"
-          component={MapClusterDemoScreen}
+          name="AmitAKVScreen"
+          component={AmitAKVScreen}
           options={{
-            title: 'Map Cluster Demo',
+            title: 'Amit - AKV',
           }}
         />
         <Stack.Screen
-          name="BottomTabNavigator"
-          component={BottomTabNavigator}
+          name="AmitKAVHeightScreen"
+          component={AmitKAVHeightScreen}
+          options={{
+            title: 'Amit - KAV - height',
+          }}
+        />
+        <Stack.Screen
+          name="AmitKASVScreen"
+          component={AmitKASVScreen}
+          options={{
+            title: 'Amit - KASV',
+          }}
+        />
+        <Stack.Screen
+          name="AdmobScreen"
+          component={AdmobScreen}
+          options={{
+            title: 'Admob',
+          }}
+        />
+        <Stack.Screen
+          name="MarufAzureADB2CAuthScreen"
+          component={MarufAzureADB2CAuthScreen}
+          options={{
+            title: 'Maruf - Azure AD B2C Auth',
+          }}
+        />
+        <Stack.Screen
+          name="SefaReactNativeTrackPlayerScreen"
+          component={SefaReactNativeTrackPlayerScreen}
+          options={{
+            title: 'Sefa - ReactNativeTrackPlayer',
+          }}
+        />
+        <Stack.Screen
+          name="MarufEnodeLinkUITestScreen"
+          component={MarufEnodeLinkUITestScreen}
+          options={{
+            title: 'Maruf - Enode Link UI Test',
+          }}
+        />
+        <Stack.Screen
+          name="MarufTestImageBGScreen"
+          component={MarufTestImageBGScreen}
+          options={{
+            title: 'Maruf - Test Image BG',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  headerIcon: Platform.select({
-    ios: {
-      marginVertical: 12,
-      resizeMode: 'contain',
-      transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-    },
-    default: {
-      margin: 3,
-      resizeMode: 'contain',
-      transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-    },
-  }),
-  headerIconLeft: Platform.select({
-    ios: {
-      marginRight: 6,
-    },
-  }),
-  headerIconRight: Platform.select({
-    ios: {
-      marginLeft: 6,
-    },
-  }),
-  headerContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    ...Platform.select({
-      ios: null,
-      default: {
-        marginVertical: 3,
-        marginHorizontal: 11,
-      },
-    }),
-  },
-  headerContainerLeft: Platform.select({
-    ios: {
-      marginLeft: 8,
-    },
-  }),
-  headerContainerRight: Platform.select({
-    ios: {
-      marginRight: 8,
-    },
-  }),
-  headerLabelWrapper: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-  headerLabel: {
-    fontSize: 17,
-    letterSpacing: 0.35,
-  },
-});
