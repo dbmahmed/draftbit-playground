@@ -9,12 +9,31 @@ import useFetch from 'react-fetch-hook';
 import { useIsFocused } from '@react-navigation/native';
 import { handleResponse, isOkStatus } from '../utils/handleRestApiResponse';
 import usePrevious from '../utils/usePrevious';
+import {
+  encodeQueryParam,
+  renderParam,
+  renderQueryString,
+} from '../utils/encodeQueryParam';
 import * as GlobalVariables from '../config/GlobalVariableContext';
 
-export const productsGET = (Constants, _args, handlers = {}) =>
-  fetch(`https://example-data.draftbit.com/products?_limit=10`, {
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-  }).then(res => handleResponse(res, handlers));
+const cleanHeaders = headers =>
+  Object.fromEntries(Object.entries(headers).filter(kv => kv[1] != null));
+
+export const productsGET = async (Constants, _args, handlers = {}) => {
+  const paramsDict = {};
+  paramsDict['_limit'] = '10';
+  const url = `https://example-data.draftbit.com/products${renderQueryString(
+    paramsDict
+  )}`;
+  const options = {
+    headers: cleanHeaders({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    }),
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useProductsGET = (
   args = {},

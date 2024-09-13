@@ -1,12 +1,12 @@
-import { useKeepAwake } from 'expo-keep-awake';
-import React from 'react';
-import { Text, View } from 'react-native';
+// import { useKeepAwake } from 'expo-keep-awake';
+// import React from 'react';
+// import { Text, View } from 'react-native';
 
-export function KeepAwakeExample() {
-  useKeepAwake();
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>This screen will never sleep!</Text>
-    </View>
-  );
-}
+// export function KeepAwakeExample() {
+//   useKeepAwake();
+//   return (
+//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//       <Text>This screen will never sleep!</Text>
+//     </View>
+//   );
+// }

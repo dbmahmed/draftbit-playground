@@ -9,21 +9,28 @@ import useFetch from 'react-fetch-hook';
 import { useIsFocused } from '@react-navigation/native';
 import { handleResponse, isOkStatus } from '../utils/handleRestApiResponse';
 import usePrevious from '../utils/usePrevious';
+import {
+  encodeQueryParam,
+  renderParam,
+  renderQueryString,
+} from '../utils/encodeQueryParam';
 import * as GlobalVariables from '../config/GlobalVariableContext';
 
-export const dELETE$appSettings$$$appSettingsId$$DELETE = (
+const cleanHeaders = headers =>
+  Object.fromEntries(Object.entries(headers).filter(kv => kv[1] != null));
+
+export const dELETE$appSettings$$$appSettingsId$$DELETE = async (
   Constants,
   { app_settings_id },
   handlers = {}
-) =>
-  fetch(
-    `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/app_settings/${
-      typeof app_settings_id === 'string'
-        ? app_settings_id
-        : JSON.stringify(app_settings_id ?? '')
-    }`,
-    { headers: {}, method: 'DELETE' }
-  ).then(res => handleResponse(res, handlers));
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/app_settings/${encodeQueryParam(
+    app_settings_id
+  )}`;
+  const options = { method: 'DELETE' };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useDELETE$appSettings$$$appSettingsId$$DELETE = (
   initialArgs = {},
@@ -52,19 +59,21 @@ export const useDELETE$appSettings$$$appSettingsId$$DELETE = (
   );
 };
 
-export const dELETE$gmAdmin$$$gmAdminId$$DELETE = (
+export const dELETE$gmAdmin$$$gmAdminId$$DELETE = async (
   Constants,
   { gm_admin_id },
   handlers = {}
-) =>
-  fetch(
-    `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_admin/${
-      typeof gm_admin_id === 'string'
-        ? gm_admin_id
-        : JSON.stringify(gm_admin_id ?? '')
-    }`,
-    { headers: { Authorization: Constants['Bearer Token'] }, method: 'DELETE' }
-  ).then(res => handleResponse(res, handlers));
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_admin/${encodeQueryParam(
+    gm_admin_id
+  )}`;
+  const options = {
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
+    method: 'DELETE',
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useDELETE$gmAdmin$$$gmAdminId$$DELETE = (
   initialArgs = {},
@@ -93,10 +102,11 @@ export const useDELETE$gmAdmin$$$gmAdminId$$DELETE = (
   );
 };
 
-export const gET$appSettingsGET = (Constants, _args, handlers = {}) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/app_settings`, {
-    headers: {},
-  }).then(res => handleResponse(res, handlers));
+export const gET$appSettingsGET = async (Constants, _args, handlers = {}) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/app_settings`;
+  const res = await fetch(url);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$appSettingsGET = (
   args = {},
@@ -150,19 +160,17 @@ export const FetchGET$appSettingsGET = ({
   return children({ loading, data, error, refetchGET$appSettings: refetch });
 };
 
-export const gET$appSettings$$$appSettingsId$$GET = (
+export const gET$appSettings$$$appSettingsId$$GET = async (
   Constants,
   { app_settings_id },
   handlers = {}
-) =>
-  fetch(
-    `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/app_settings/${
-      typeof app_settings_id === 'string'
-        ? app_settings_id
-        : JSON.stringify(app_settings_id ?? '')
-    }`,
-    { headers: {} }
-  ).then(res => handleResponse(res, handlers));
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/app_settings/${encodeQueryParam(
+    app_settings_id
+  )}`;
+  const res = await fetch(url);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$appSettings$$$appSettingsId$$GET = (
   args = {},
@@ -221,27 +229,30 @@ export const FetchGET$appSettings$$$appSettingsId$$GET = ({
   });
 };
 
-export const gET$dashboardGET = (
+export const gET$dashboardGET = async (
   Constants,
   { end_date, game, start_date },
   handlers = {}
-) =>
-  fetch(
-    `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/dashboard?start_date=${encodeURIComponent(
-      `${
-        typeof start_date === 'string'
-          ? start_date
-          : JSON.stringify(start_date ?? '')
-      }`
-    )}&end_date=${encodeURIComponent(
-      `${
-        typeof end_date === 'string' ? end_date : JSON.stringify(end_date ?? '')
-      }`
-    )}&game=${encodeURIComponent(
-      `${typeof game === 'string' ? game : JSON.stringify(game ?? '')}`
-    )}`,
-    { headers: { Authorization: Constants['Bearer Token'] } }
-  ).then(res => handleResponse(res, handlers));
+) => {
+  const paramsDict = {};
+  if (start_date !== undefined) {
+    paramsDict['start_date'] = renderParam(start_date);
+  }
+  if (end_date !== undefined) {
+    paramsDict['end_date'] = renderParam(end_date);
+  }
+  if (game !== undefined) {
+    paramsDict['game'] = renderParam(game);
+  }
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/dashboard${renderQueryString(
+    paramsDict
+  )}`;
+  const options = {
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$dashboardGET = (
   args = {},
@@ -298,10 +309,18 @@ export const FetchGET$dashboardGET = ({
   return children({ loading, data, error, refetchGET$dashboard: refetch });
 };
 
-export const gET$dashboardCountsGET = (Constants, _args, handlers = {}) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/dashboard_counts`, {
-    headers: { Authorization: Constants['Bearer Token'] },
-  }).then(res => handleResponse(res, handlers));
+export const gET$dashboardCountsGET = async (
+  Constants,
+  _args,
+  handlers = {}
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/dashboard_counts`;
+  const options = {
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$dashboardCountsGET = (
   args = {},
@@ -360,10 +379,14 @@ export const FetchGET$dashboardCountsGET = ({
   });
 };
 
-export const gET$gameRequestGET = (Constants, _args, handlers = {}) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/game_request`, {
-    headers: { Authorization: Constants['Bearer Token'] },
-  }).then(res => handleResponse(res, handlers));
+export const gET$gameRequestGET = async (Constants, _args, handlers = {}) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/game_request`;
+  const options = {
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$gameRequestGET = (
   args = {},
@@ -417,15 +440,18 @@ export const FetchGET$gameRequestGET = ({
   return children({ loading, data, error, refetchGET$gameRequest: refetch });
 };
 
-export const gET$getUnseenNotificationsCountGET = (
+export const gET$getUnseenNotificationsCountGET = async (
   Constants,
   _args,
   handlers = {}
-) =>
-  fetch(
-    `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/get_unseen_notifications_count`,
-    { headers: { Authorization: Constants['Bearer Token'] } }
-  ).then(res => handleResponse(res, handlers));
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/get_unseen_notifications_count`;
+  const options = {
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$getUnseenNotificationsCountGET = (
   args = {},
@@ -486,10 +512,14 @@ export const FetchGET$getUnseenNotificationsCountGET = ({
   });
 };
 
-export const gET$gmAdminGET = (Constants, _args, handlers = {}) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_admin`, {
-    headers: { Authorization: Constants['Bearer Token'] },
-  }).then(res => handleResponse(res, handlers));
+export const gET$gmAdminGET = async (Constants, _args, handlers = {}) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_admin`;
+  const options = {
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$gmAdminGET = (
   args = {},
@@ -542,19 +572,17 @@ export const FetchGET$gmAdminGET = ({
   return children({ loading, data, error, refetchGET$gmAdmin: refetch });
 };
 
-export const gET$gmAdmin$$$gmAdminId$$GET = (
+export const gET$gmAdmin$$$gmAdminId$$GET = async (
   Constants,
   { gm_admin_id },
   handlers = {}
-) =>
-  fetch(
-    `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_admin/${
-      typeof gm_admin_id === 'string'
-        ? gm_admin_id
-        : JSON.stringify(gm_admin_id ?? '')
-    }`,
-    { headers: {} }
-  ).then(res => handleResponse(res, handlers));
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_admin/${encodeQueryParam(
+    gm_admin_id
+  )}`;
+  const res = await fetch(url);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$gmAdmin$$$gmAdminId$$GET = (
   args = {},
@@ -614,10 +642,18 @@ export const FetchGET$gmAdmin$$$gmAdminId$$GET = ({
   });
 };
 
-export const gET$gmNotificationsGET = (Constants, _args, handlers = {}) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_notifications`, {
-    headers: { Authorization: Constants['Bearer Token'] },
-  }).then(res => handleResponse(res, handlers));
+export const gET$gmNotificationsGET = async (
+  Constants,
+  _args,
+  handlers = {}
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_notifications`;
+  const options = {
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$gmNotificationsGET = (
   args = {},
@@ -676,17 +712,24 @@ export const FetchGET$gmNotificationsGET = ({
   });
 };
 
-export const gET$gmNotificationsPaginatedGET = (
+export const gET$gmNotificationsPaginatedGET = async (
   Constants,
   { page },
   handlers = {}
-) =>
-  fetch(
-    `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_notifications_paginated?page=${encodeURIComponent(
-      `${typeof page === 'string' ? page : JSON.stringify(page ?? '')}`
-    )}`,
-    { headers: { Authorization: Constants['Bearer Token'] } }
-  ).then(res => handleResponse(res, handlers));
+) => {
+  const paramsDict = {};
+  if (page !== undefined) {
+    paramsDict['page'] = renderParam(page);
+  }
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_notifications_paginated${renderQueryString(
+    paramsDict
+  )}`;
+  const options = {
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$gmNotificationsPaginatedGET = (
   args = {},
@@ -748,10 +791,14 @@ export const FetchGET$gmNotificationsPaginatedGET = ({
   });
 };
 
-export const gET$markAsSeenGET = (Constants, _args, handlers = {}) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/mark_as_seen`, {
-    headers: { Authorization: Constants['Bearer Token'] },
-  }).then(res => handleResponse(res, handlers));
+export const gET$markAsSeenGET = async (Constants, _args, handlers = {}) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/mark_as_seen`;
+  const options = {
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$markAsSeenGET = (
   args = {},
@@ -805,10 +852,14 @@ export const FetchGET$markAsSeenGET = ({
   return children({ loading, data, error, refetchGET$markAsSeen: refetch });
 };
 
-export const gET$sidebarCountsGET = (Constants, _args, handlers = {}) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/sidebar_counts`, {
-    headers: { Authorization: Constants['Bearer Token'] },
-  }).then(res => handleResponse(res, handlers));
+export const gET$sidebarCountsGET = async (Constants, _args, handlers = {}) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/sidebar_counts`;
+  const options = {
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$sidebarCountsGET = (
   args = {},
@@ -862,13 +913,17 @@ export const FetchGET$sidebarCountsGET = ({
   return children({ loading, data, error, refetchGET$sidebarCounts: refetch });
 };
 
-export const gET$testEndpointGET = (Constants, { id }, handlers = {}) =>
-  fetch(
-    `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/test_endpoint?id=${encodeURIComponent(
-      `${typeof id === 'string' ? id : JSON.stringify(id ?? '')}`
-    )}`,
-    { headers: {} }
-  ).then(res => handleResponse(res, handlers));
+export const gET$testEndpointGET = async (Constants, { id }, handlers = {}) => {
+  const paramsDict = {};
+  if (id !== undefined) {
+    paramsDict['id'] = renderParam(id);
+  }
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/test_endpoint${renderQueryString(
+    paramsDict
+  )}`;
+  const res = await fetch(url);
+  return handleResponse(res, handlers);
+};
 
 export const useGET$testEndpointGET = (
   args = {},
@@ -923,21 +978,24 @@ export const FetchGET$testEndpointGET = ({
   return children({ loading, data, error, refetchGET$testEndpoint: refetch });
 };
 
-export const pOST$appSettingsPOST = (
+export const pOST$appSettingsPOST = async (
   Constants,
   { ban_time, donation_amount, min_wait_time, referral_amount },
   handlers = {}
-) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/app_settings`, {
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/app_settings`;
+  const options = {
     body: JSON.stringify({
       ban_time: ban_time,
       min_wait_time: min_wait_time,
       donation_amount: donation_amount,
       referral_amount: referral_amount,
     }),
-    headers: {},
     method: 'POST',
-  }).then(res => handleResponse(res, handlers));
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const usePOST$appSettingsPOST = (
   initialArgs = {},
@@ -1001,7 +1059,7 @@ export const FetchPOST$appSettingsPOST = ({
   return children({ loading, data, error, refetchPOST$appSettings: refetch });
 };
 
-export const pOST$appSettings$$$appSettingsId$$POST = (
+export const pOST$appSettings$$$appSettingsId$$POST = async (
   Constants,
   {
     app_settings_id,
@@ -1011,24 +1069,22 @@ export const pOST$appSettings$$$appSettingsId$$POST = (
     referral_amount,
   },
   handlers = {}
-) =>
-  fetch(
-    `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/app_settings/${
-      typeof app_settings_id === 'string'
-        ? app_settings_id
-        : JSON.stringify(app_settings_id ?? '')
-    }`,
-    {
-      body: JSON.stringify({
-        ban_time: ban_time,
-        min_wait_time: min_wait_time,
-        donation_amount: donation_amount,
-        referral_amount: referral_amount,
-      }),
-      headers: {},
-      method: 'POST',
-    }
-  ).then(res => handleResponse(res, handlers));
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/app_settings/${encodeQueryParam(
+    app_settings_id
+  )}`;
+  const options = {
+    body: JSON.stringify({
+      ban_time: ban_time,
+      min_wait_time: min_wait_time,
+      donation_amount: donation_amount,
+      referral_amount: referral_amount,
+    }),
+    method: 'POST',
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const usePOST$appSettings$$$appSettingsId$$POST = (
   args = {},
@@ -1100,16 +1156,19 @@ export const FetchPOST$appSettings$$$appSettingsId$$POST = ({
   });
 };
 
-export const pOST$auth$loginPOST = (
+export const pOST$auth$loginPOST = async (
   Constants,
   { email, password },
   handlers = {}
-) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/auth/login`, {
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/auth/login`;
+  const options = {
     body: JSON.stringify({ email: email, password: password }),
-    headers: {},
     method: 'POST',
-  }).then(res => handleResponse(res, handlers));
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const usePOST$auth$loginPOST = (
   args = {},
@@ -1164,16 +1223,19 @@ export const FetchPOST$auth$loginPOST = ({
   return children({ loading, data, error, refetchPOST$auth$login: refetch });
 };
 
-export const pOST$auth$signupPOST = (
+export const pOST$auth$signupPOST = async (
   Constants,
   { email, password },
   handlers = {}
-) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/auth/signup`, {
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/auth/signup`;
+  const options = {
     body: JSON.stringify({ email: email, password: password }),
-    headers: {},
     method: 'POST',
-  }).then(res => handleResponse(res, handlers));
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const usePOST$auth$signupPOST = (
   args = {},
@@ -1229,16 +1291,20 @@ export const FetchPOST$auth$signupPOST = ({
   return children({ loading, data, error, refetchPOST$auth$signup: refetch });
 };
 
-export const pOST$gmAdminPOST = (
+export const pOST$gmAdminPOST = async (
   Constants,
   { emailId, password },
   handlers = {}
-) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_admin`, {
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_admin`;
+  const options = {
     body: JSON.stringify({ emailId: emailId, password: password }),
-    headers: { Authorization: Constants['Bearer Token'] },
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
     method: 'POST',
-  }).then(res => handleResponse(res, handlers));
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const usePOST$gmAdminPOST = (
   args = {},
@@ -1294,30 +1360,28 @@ export const FetchPOST$gmAdminPOST = ({
   return children({ loading, data, error, refetchPOST$gmAdmin: refetch });
 };
 
-export const pOST$gmAdmin$$$gmAdminId$$POST = (
+export const pOST$gmAdmin$$$gmAdminId$$POST = async (
   Constants,
   { admin_user_id, email, gm_admin_id, last_login, password, role, status },
   handlers = {}
-) =>
-  fetch(
-    `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_admin/${
-      typeof gm_admin_id === 'string'
-        ? gm_admin_id
-        : JSON.stringify(gm_admin_id ?? '')
-    }`,
-    {
-      body: JSON.stringify({
-        admin_user_id: admin_user_id,
-        email: email,
-        password: password,
-        last_login: last_login,
-        status: status,
-        role: role,
-      }),
-      headers: {},
-      method: 'POST',
-    }
-  ).then(res => handleResponse(res, handlers));
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/gm_admin/${encodeQueryParam(
+    gm_admin_id
+  )}`;
+  const options = {
+    body: JSON.stringify({
+      admin_user_id: admin_user_id,
+      email: email,
+      password: password,
+      last_login: last_login,
+      status: status,
+      role: role,
+    }),
+    method: 'POST',
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const usePOST$gmAdmin$$$gmAdminId$$POST = (
   args = {},
@@ -1383,12 +1447,20 @@ export const FetchPOST$gmAdmin$$$gmAdminId$$POST = ({
   });
 };
 
-export const pOST$markIdsAsSeenPOST = (Constants, { ids }, handlers = {}) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/mark_ids_as_seen`, {
+export const pOST$markIdsAsSeenPOST = async (
+  Constants,
+  { ids },
+  handlers = {}
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/mark_ids_as_seen`;
+  const options = {
     body: JSON.stringify({ ids: ids }),
-    headers: { Authorization: Constants['Bearer Token'] },
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
     method: 'POST',
-  }).then(res => handleResponse(res, handlers));
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const usePOST$markIdsAsSeenPOST = (
   args = {},
@@ -1443,16 +1515,20 @@ export const FetchPOST$markIdsAsSeenPOST = ({
   return children({ loading, data, error, refetchPOST$markIdsAsSeen: refetch });
 };
 
-export const pOST$sendNotificationsPOST = (
+export const pOST$sendNotificationsPOST = async (
   Constants,
   { body, title },
   handlers = {}
-) =>
-  fetch(`https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/send_notifications`, {
+) => {
+  const url = `https://xfie-awg5-rjfa.n7c.xano.io/api:ye9PF9qK/send_notifications`;
+  const options = {
     body: JSON.stringify({ title: title, body: body }),
-    headers: { Authorization: Constants['Bearer Token'] },
+    headers: cleanHeaders({ Authorization: Constants['Bearer Token'] }),
     method: 'POST',
-  }).then(res => handleResponse(res, handlers));
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const usePOST$sendNotificationsPOST = (
   args = {},

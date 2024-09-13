@@ -21,15 +21,7 @@ const linking = {
   enabled: Platform.OS === 'web' ? false : true,
   prefixes: [prefix],
   config: {
-    screens: {
-      MarufAzureADB2CAuthScreen: {
-        screens: {
-          MarufAzureADB2CAuthScreen: {
-            path: 'MarufAzureADB2CAuthScreen/:code?',
-          },
-        },
-      },
-    },
+    screens: {},
   },
 };
 

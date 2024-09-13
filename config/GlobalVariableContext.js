@@ -4,6 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const DeviceVariables = {
+  auth_token: '',
   AZURE_ANDROID_CLIENT_ID: 'a02fb6f1-75f6-4493-8631-c63ea24939cd',
   AZURE_ANDROID_REDIRECT_URL:
     'msauth://co.uk.driveelectric.app/4%2B5wCp8QcLptlO0aeP5RDTTOWyg%3D',
@@ -13,7 +14,7 @@ export const DeviceVariables = {
   AZURE_CLIENT_ID: 'cb0039b6-a245-4095-905a-f22a9456bca5',
   AZURE_PROJECT_ID: 'babba09b-0cc3-4c75-b675-8e3595d54b2a',
   AZURE_REDIRECT_URL: 'msauth.com.crowdcharge.temp://auth',
-  auth_token: '',
+  CALLTIME_GMAIL_TOKEN: '',
   newuser: '',
   user: {},
   __env__: 'Development',
@@ -30,6 +31,7 @@ export const AppVariables = {
 };
 const GlobalVariableContext = React.createContext();
 const GlobalVariableUpdater = React.createContext();
+const keySuffix = '';
 
 // Attempt to parse a string as JSON. If the parse fails, return the string as-is.
 // This is necessary to account for variables which are already present in local
@@ -52,7 +54,7 @@ class GlobalVariable {
   static async syncToLocalStorage(values) {
     const update = Object.entries(values)
       .filter(([key]) => key in DeviceVariables)
-      .map(([key, value]) => [key, JSON.stringify(value)]);
+      .map(([key, value]) => [key + keySuffix, JSON.stringify(value)]);
 
     if (update.length > 0) {
       await AsyncStorage.multiSet(update);
@@ -62,14 +64,19 @@ class GlobalVariable {
   }
 
   static async loadLocalStorage() {
-    const entries = await AsyncStorage.multiGet(Object.keys(DeviceVariables));
+    const keys = Object.keys(DeviceVariables);
+    const entries = await AsyncStorage.multiGet(
+      keySuffix ? keys.map(k => k + keySuffix) : keys
+    );
 
     // If values isn't set, use the default. These will be written back to
     // storage on the next render.
-    const withDefaults = entries.map(([key, value]) => [
-      key,
-      value ? tryParseJson(value) : DeviceVariables[key],
-    ]);
+    const withDefaults = entries.map(([key_, value]) => {
+      // Keys only have the suffix appended in storage; strip the key
+      // after they are retrieved
+      const key = keySuffix ? key_.replace(keySuffix, '') : key_;
+      return [key, value ? tryParseJson(value) : DeviceVariables[key]];
+    });
 
     return Object.fromEntries(withDefaults);
   }

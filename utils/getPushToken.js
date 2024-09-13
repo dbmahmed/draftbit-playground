@@ -4,8 +4,10 @@ import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 
 async function registerForPushNotificationsAsync({
-  failMessage,
-  deviceMessage,
+  permissionErrorMessage = 'Sorry, we need notifications permissions to make this work.',
+  deviceErrorMessage = 'Must use physical device for Push Notifications.',
+  showAlertOnPermissionError = true,
+  showAlertOnDeviceError = true,
 } = {}) {
   let token;
 
@@ -29,9 +31,11 @@ async function registerForPushNotificationsAsync({
     }
 
     if (finalStatus !== 'granted') {
-      return alert(
-        failMessage ?? 'Failed to get push token for push notification!'
-      );
+      console.error('Notifications permissions were not granted.');
+      if (showAlertOnPermissionError) {
+        alert(permissionErrorMessage);
+      }
+      return;
     }
 
     const tokenResult = await Notifications.getExpoPushTokenAsync({
@@ -40,7 +44,10 @@ async function registerForPushNotificationsAsync({
 
     token = tokenResult.data;
   } else {
-    alert(deviceMessage ?? 'Must use physical device for Push Notifications');
+    console.error('Notifications require a physical device.');
+    if (showAlertOnDeviceError) {
+      alert(deviceErrorMessage);
+    }
   }
 
   return token;

@@ -1,14 +1,16 @@
 import React from 'react';
-import * as GlobalStyles from '../GlobalStyles.js';
-import * as GlobalVariables from '../config/GlobalVariableContext';
-import * as CustomCode from '../custom-files/CustomCode';
-import Breakpoints from '../utils/Breakpoints';
-import * as StyleSheet from '../utils/StyleSheet';
-import useWindowDimensions from '../utils/useWindowDimensions';
 import { Button, TextInput, withTheme } from '@draftbit/ui';
 import { useNavigation } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
 import { View } from 'react-native';
+import Purchases from 'react-native-purchases';
+import * as GlobalStyles from '../GlobalStyles.js';
+import * as GlobalVariables from '../config/GlobalVariableContext';
+import * as CustomCode from '../custom-files/CustomCode';
+import palettes from '../themes/palettes';
+import Breakpoints from '../utils/Breakpoints';
+import * as StyleSheet from '../utils/StyleSheet';
+import useWindowDimensions from '../utils/useWindowDimensions';
 
 const SaveBlock = props => {
   const { theme } = props;
@@ -43,8 +45,8 @@ const SaveBlock = props => {
         )}
       >
         <TextInput
-          allowFontScaling={true}
           autoCapitalize={'none'}
+          autoCorrect={true}
           changeTextDelay={500}
           onChangeText={newTextInputValue => {
             const textInputValue = newTextInputValue;
@@ -55,14 +57,17 @@ const SaveBlock = props => {
             }
           }}
           placeholder={'Enter a value...'}
+          webShowOutline={true}
+          {...GlobalStyles.TextInputStyles(theme)['Text Input'].props}
           style={StyleSheet.applyWidth(
-            GlobalStyles.TextInputStyles(theme)['Text Input'],
+            GlobalStyles.TextInputStyles(theme)['Text Input'].style,
             dimensions.width
           )}
           value={textInputValue}
         />
       </View>
       <Button
+        iconPosition={'left'}
         onPress={() => {
           try {
             navigation.goBack();
@@ -70,8 +75,9 @@ const SaveBlock = props => {
             console.error(err);
           }
         }}
+        {...GlobalStyles.ButtonStyles(theme)['Button'].props}
         style={StyleSheet.applyWidth(
-          StyleSheet.compose(GlobalStyles.ButtonStyles(theme)['Button'], {
+          StyleSheet.compose(GlobalStyles.ButtonStyles(theme)['Button'].style, {
             marginLeft: 5,
           }),
           dimensions.width

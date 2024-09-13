@@ -9,33 +9,42 @@ import useFetch from 'react-fetch-hook';
 import { useIsFocused } from '@react-navigation/native';
 import { handleResponse, isOkStatus } from '../utils/handleRestApiResponse';
 import usePrevious from '../utils/usePrevious';
+import {
+  encodeQueryParam,
+  renderParam,
+  renderQueryString,
+} from '../utils/encodeQueryParam';
 import * as GlobalVariables from '../config/GlobalVariableContext';
 
-export const generateLinkPOST = (Constants, { user }, handlers = {}) =>
-  fetch(
-    `https://enode-api.sandbox.enode.io/users/${
-      typeof user === 'string' ? user : JSON.stringify(user ?? '')
-    }/link`,
-    {
-      body: JSON.stringify({
-        vendorType: 'vehicle',
-        language: 'en-US',
-        scopes: [
-          'vehicle:read:data',
-          'vehicle:read:location',
-          'vehicle:control:charging',
-        ],
-        colorScheme: 'system',
-        redirectUri: 'yourapp://integrations/enode',
-      }),
-      headers: {
-        Accept: 'application/json',
-        Authorization: Constants['ENODE_LINK_UI_TOKEN'],
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    }
-  ).then(res => handleResponse(res, handlers));
+const cleanHeaders = headers =>
+  Object.fromEntries(Object.entries(headers).filter(kv => kv[1] != null));
+
+export const generateLinkPOST = async (Constants, { user }, handlers = {}) => {
+  const url = `https://enode-api.sandbox.enode.io/users/${encodeQueryParam(
+    user
+  )}/link`;
+  const options = {
+    body: JSON.stringify({
+      vendorType: 'vehicle',
+      language: 'en-US',
+      scopes: [
+        'vehicle:read:data',
+        'vehicle:read:location',
+        'vehicle:control:charging',
+      ],
+      colorScheme: 'system',
+      redirectUri: 'yourapp://integrations/enode',
+    }),
+    headers: cleanHeaders({
+      Accept: 'application/json',
+      Authorization: Constants['ENODE_LINK_UI_TOKEN'],
+      'Content-Type': 'application/json',
+    }),
+    method: 'POST',
+  };
+  const res = await fetch(url, options);
+  return handleResponse(res, handlers);
+};
 
 export const useGenerateLinkPOST = (
   args = {},

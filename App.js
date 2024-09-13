@@ -1,19 +1,34 @@
 import * as React from 'react';
+import { Icon, Provider as ThemeProvider } from '@draftbit/ui';
+import { useFonts } from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
+import {
+  ActivityIndicator,
+  AppState,
+  Platform,
+  StatusBar,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import Purchases from 'react-native-purchases';
 import {
   SafeAreaProvider,
   initialWindowMetrics,
 } from 'react-native-safe-area-context';
-import { View, Text, ActivityIndicator, AppState } from 'react-native';
-import { Provider as ThemeProvider } from '@draftbit/ui';
 import { QueryClient, QueryClientProvider } from 'react-query';
-
 import AppNavigator from './AppNavigator';
-import Draftbit from './themes/Draftbit.js';
-import cacheAssetsAsync from './config/cacheAssetsAsync';
+import Fonts from './config/Fonts.js';
 import { GlobalVariableProvider } from './config/GlobalVariableContext';
-import { useFonts } from 'expo-font';
+import cacheAssetsAsync from './config/cacheAssetsAsync';
+import * as ExternalPackages from './custom-files/ExternalPackages';
+import Draftbit from './themes/Draftbit';
+import useIsOnline from './utils/useIsOnline';
+
+// import { Settings } from 'react-native-fbsdk-next';
+// import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
+
 SplashScreen.preventAutoHideAsync();
 
 Notifications.setNotificationHandler({
@@ -33,25 +48,9 @@ const App = () => {
   const [areAssetsCached, setAreAssetsCached] = React.useState(false);
 
   const [fontsLoaded] = useFonts({
-    Poppins_400Regular:
-      'https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrFJDUc1NECPY.ttf',
+    Aclonica_400Regular: Fonts.Aclonica_400Regular,
+    Barriecito_400Regular: Fonts.Barriecito_400Regular,
   });
-  const [fontsTimedOut, setFontsTimedOut] = React.useState(false);
-  const [fontTimer, setFontTimer] = React.useState(null);
-  React.useEffect(() => {
-    if (fontsLoaded && fontTimer) {
-      clearTimeout(fontTimer);
-      setFontsTimedOut(false);
-    }
-    if (!fontsLoaded && !fontTimer) {
-      const timer = setTimeout(() => {
-        console.warn('Timed out waiting for fonts to load');
-        setFontsTimedOut(true);
-      }, 10000);
-      setFontTimer(timer);
-      return () => clearTimeout(timer);
-    }
-  }, [fontsLoaded, fontTimer]);
 
   React.useEffect(() => {
     async function prepare() {
@@ -67,12 +66,54 @@ const App = () => {
     prepare();
   }, []);
 
-  const isReady = areAssetsCached && (fontsLoaded || fontsTimedOut);
+  const isOnline = useIsOnline();
+
+  const isReady = areAssetsCached && fontsLoaded;
   const onLayoutRootView = React.useCallback(async () => {
     if (isReady) {
       await SplashScreen.hideAsync();
     }
   }, [isReady]);
+
+  // React.useEffect(() => {
+
+  //         const requestTracking = async () => {
+  //                 const { status } = await requestTrackingPermissionsAsync();
+
+  //                 Settings.initializeSDK();
+
+  //                 if (status === "granted") {
+  //                         await Settings.setAdvertiserTrackingEnabled(true);
+  //                 }
+  //         };
+
+  //         requestTracking();
+  // }, [])
+
+  // const featureClient = new ExternalPackages.ReactNativeLDClient(
+  //   'mob-c992a1d6-5985-4bd8-8c3f-523b6938eaa1',
+  //   ExternalPackages.AutoEnvAttributes.Enabled,
+  //   {
+  //     debug: true,
+  //     applicationInfo: {
+  //       id: 'ld-rn-test-app',
+  //       version: '0.0.1',
+  //     },
+  //   },
+  // )
+
+  React.useEffect(() => {
+    async function initRevenueCat() {
+      if (Platform.OS == 'android') {
+        await Purchases.configure({ apiKey: '' });
+      } else {
+        await Purchases.configure({
+          apiKey: 'appl_ykoXtgdaPnVqLrlygZcqyIpVGlV',
+        });
+      }
+    }
+    initRevenueCat();
+  }, []);
 
   if (!isReady) {
     return null;
@@ -85,7 +126,40 @@ const App = () => {
     >
       <GlobalVariableProvider>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={Draftbit}>
+          <ThemeProvider
+            themes={[Draftbit]}
+            breakpoints={{}}
+            initialThemeName={Draftbit.name}
+          >
+            {!isOnline ? (
+              <View
+                style={{
+                  position: 'absolute',
+                  zIndex: 1,
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  display: 'flex',
+                  backgroundColor: 'grey',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  paddingHorizontal: 12,
+                }}
+              >
+                <Icon
+                  name="MaterialCommunityIcons/cloud-off-outline"
+                  size={80}
+                  color="white"
+                />
+                <Text style={{ fontSize: 20, marginTop: 20, color: 'white' }}>
+                  Your device has lost connection to the internet. This app may
+                  not function as expected until you reconnect.
+                </Text>
+              </View>
+            ) : null}
+
             <AppNavigator />
           </ThemeProvider>
         </QueryClientProvider>
