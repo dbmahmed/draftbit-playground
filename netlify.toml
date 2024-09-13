@@ -3,3 +3,10 @@ from = "/.well-known/apple-app-site-association"
 to = "/.netlify/functions/asa"
 status = 200
 force = true
+
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+force = true
