@@ -13,7 +13,7 @@
         "NSMicrophoneUsageDescription": "This app uses the microphone to enable audio chat with others",
         "NSBluetoothAlwaysUsageDescription": "Our app requires Bluetooth to connect with energy devices, enabling efficient device management and enhanced user experience."
       },
-      "buildNumber": "1.138.0",
+      "buildNumber": "1.139.0",
       "supportsTablet": true,
       "backgroundColor": "#711B1B",
       "bundleIdentifier": "com.draftbit.playground",
@@ -75,7 +75,7 @@
       },
       "package": "com.draftbit.playground",
       "permissions": [],
-      "versionCode": 138,
+      "versionCode": 139,
       "adaptiveIcon": {
         "monochromeImage": "https://assets.draftbit.app/apps/DhDM0GRf/assets/IZ5lfEYRHl9h-RU9cIt-b"
       },
@@ -83,7 +83,7 @@
       "googleServicesFile": "config/google-services.json"
     },
     "privacy": "unlisted",
-    "version": "1.138.0",
+    "version": "1.139.0",
     "platforms": [
       "ios",
       "android",

@@ -9,9 +9,9 @@ import Purchases from 'react-native-purchases';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { systemWeights } from 'react-native-typography';
 import LinkingConfiguration from './LinkingConfiguration';
-import BlankScreen from './screens/BlankScreen';
 import PaywallScreen from './screens/PaywallScreen';
 import RevenueCatLoginScreen from './screens/RevenueCatLoginScreen';
+import TestAutofillMarufScreen from './screens/TestAutofillMarufScreen';
 import palettes from './themes/palettes';
 import Breakpoints from './utils/Breakpoints';
 import useWindowDimensions from './utils/useWindowDimensions';
@@ -64,7 +64,7 @@ export default function RootAppNavigator() {
       linking={LinkingConfiguration}
     >
       <Stack.Navigator
-        initialRouteName="BlankScreen"
+        initialRouteName="TestAutofillMarufScreen"
         screenOptions={({ navigation }) => ({
           cardStyle: { flex: 1 },
           headerBackImage:
@@ -73,13 +73,6 @@ export default function RootAppNavigator() {
           headerShown: false,
         })}
       >
-        <Stack.Screen
-          name="BlankScreen"
-          component={BlankScreen}
-          options={({ navigation }) => ({
-            title: 'Blank',
-          })}
-        />
         <Stack.Screen
           name="RevenueCatLoginScreen"
           component={RevenueCatLoginScreen}
@@ -92,6 +85,13 @@ export default function RootAppNavigator() {
           component={PaywallScreen}
           options={({ navigation }) => ({
             title: 'Paywall',
+          })}
+        />
+        <Stack.Screen
+          name="TestAutofillMarufScreen"
+          component={TestAutofillMarufScreen}
+          options={({ navigation }) => ({
+            title: 'Test autofill Maruf',
           })}
         />
       </Stack.Navigator>

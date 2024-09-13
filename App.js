@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Icon, Provider as ThemeProvider } from '@draftbit/ui';
-import { useFonts } from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import {
@@ -19,7 +18,6 @@ import {
 } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AppNavigator from './AppNavigator';
-import Fonts from './config/Fonts.js';
 import { GlobalVariableProvider } from './config/GlobalVariableContext';
 import cacheAssetsAsync from './config/cacheAssetsAsync';
 import * as ExternalPackages from './custom-files/ExternalPackages';
@@ -46,11 +44,7 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const [areAssetsCached, setAreAssetsCached] = React.useState(false);
-
-  const [fontsLoaded] = useFonts({
-    Aclonica_400Regular: Fonts.Aclonica_400Regular,
-    Barriecito_400Regular: Fonts.Barriecito_400Regular,
-  });
+  const fontsLoaded = true;
 
   React.useEffect(() => {
     async function prepare() {
