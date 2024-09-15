@@ -1,10 +1,22 @@
 exports.handler = async function (event, context) {
-  return {
+console.log(event.path)
+if (event.path === ".well-known/apple-app-site-association") {
+    // Redirect to the Netlify function
+    return {
     statusCode: 200,
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 			'Content-Type': 'application/json; charset=utf-8',
 		},
-    body: "{\"applinks\":{\"details\":[{\"appIDs\":[\"V2J3KK598N.com.draftbit.playground\"],\"components\":[{\"/\":\"/test/*\",\"comment\":\"Matches any URL with a path that starts with /test/.\"}]}]},\"webcredentials\":{\"apps\":[\"V2J3KK598N.com.draftbit.playground\"]}}",
+    body: "{\"applinks\":{\"details\":[{\"appIDs\":[\"V2J3KK598N.com.draftbit.playground\"],\"components\":[{\"/\":\"/test/*\",\"comment\":\"Matches any URL with a path that starts with /test/.\"}]}]},\"webcredentials\":{\"apps\":[\"V2J3KK598N.playground-app.netlify.app\"]}}",
   };
+  } else {
+    // Redirect to index.html
+    return {
+      statusCode: 302,
+      headers: {
+        Location: "../web-build/index.html"
+      }
+    };
+  }
 };
