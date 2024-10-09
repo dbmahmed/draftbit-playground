@@ -1,4 +1,6 @@
 exports.handler = async function (event, context) {
+  console.log(event.path)
+  // Redirect to the Netlify function
   return {
     statusCode: 200,
     headers: {
@@ -16,7 +18,8 @@ exports.handler = async function (event, context) {
             "components": [{
                 "/": "/app/*",
                 "comment": "Matches all routes"
-              }
+              },
+            ]
           }]
         },
         "activitycontinuation": {
@@ -26,7 +29,7 @@ exports.handler = async function (event, context) {
         },
         "webcredentials": {
           "apps": [
-            "V2J3KK598N.com.draftbit.playground"
+           "V2J3KK598N.com.draftbit.playground"
           ]
         }
       }
