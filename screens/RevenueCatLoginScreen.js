@@ -28,7 +28,7 @@ const RevenueCatLoginScreen = props => {
         onPress={() => {
           try {
             setIsLoading(true);
-            const loginResult = Purchases.logIn(String('rahulshukla'));
+            const loginResult = Purchases.logIn(String(new Date()));
             /* hidden 'Set Variable' action */
             /* hidden 'Get Offerings (RevenueCat)' action */
             /* hidden 'Set Variable' action */
@@ -44,7 +44,7 @@ const RevenueCatLoginScreen = props => {
           GlobalStyles.ButtonStyles(theme)['Button'].style,
           dimensions.width
         )}
-        title={'Login Revenu Cat'}
+        title={'Login Revenue Cat'}
       />
     </ScreenContainer>
   );

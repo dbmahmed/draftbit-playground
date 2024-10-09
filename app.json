@@ -11,15 +11,13 @@
         ],
         "NSCameraUsageDescription": "This app uses the camera to scan barcodes on event tickets.",
         "NSMicrophoneUsageDescription": "This app uses the microphone to enable audio chat with others",
-        "NSBluetoothAlwaysUsageDescription": "Our app requires Bluetooth to connect with energy devices, enabling efficient device management and enhanced user experience."
+        "NSBluetoothAlwaysUsageDescription": "Our app requires Bluetooth to connect with energy devices, enabling efficient device management and enhanced user experience.",
+        "com.apple.developer.authentication-services.autofill-credential-provider": true
       },
-      "buildNumber": "1.140.0",
+      "buildNumber": "1.156.0",
       "supportsTablet": true,
       "backgroundColor": "#711B1B",
       "bundleIdentifier": "com.draftbit.playground",
-      "associatedDomains": [
-        "test"
-      ],
       "requireFullScreen": true,
       "usesIcloudStorage": false,
       "userInterfaceStyle": "dark",
@@ -50,7 +48,10 @@
             ]
           }
         ]
-      }
+      },
+      "associatedDomains": [
+        "applinks:playground-app.netlify.app"
+      ]
     },
     "web": {
       "themeColor": "#000000"
@@ -75,7 +76,7 @@
       },
       "package": "com.draftbit.playground",
       "permissions": [],
-      "versionCode": 140,
+      "versionCode": 156,
       "adaptiveIcon": {
         "monochromeImage": "https://assets.draftbit.app/apps/DhDM0GRf/assets/IZ5lfEYRHl9h-RU9cIt-b"
       },
@@ -83,7 +84,7 @@
       "googleServicesFile": "config/google-services.json"
     },
     "privacy": "unlisted",
-    "version": "1.140.0",
+    "version": "1.156.0",
     "platforms": [
       "ios",
       "android",

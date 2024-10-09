@@ -8,18 +8,27 @@ import {
   withTheme,
 } from '@draftbit/ui';
 import { useIsFocused } from '@react-navigation/native';
+import * as WebBrowser from 'expo-web-browser';
 import { Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Purchases from 'react-native-purchases';
+import * as GlobalStyles from '../GlobalStyles.js';
+import * as GlobalVariables from '../config/GlobalVariableContext';
+import * as CustomCode from '../custom-files/CustomCode';
+import * as CustomTextInput from '../custom-files/CustomTextInput';
 import palettes from '../themes/palettes';
+import * as Utils from '../utils';
 import Breakpoints from '../utils/Breakpoints';
 import * as StyleSheet from '../utils/StyleSheet';
-import showAlertUtil from '../utils/showAlert';
 import useWindowDimensions from '../utils/useWindowDimensions';
 
 const TestAutofillMarufScreen = props => {
-  const { theme } = props;
+  const { theme, navigation } = props;
   const dimensions = useWindowDimensions();
+  const Constants = GlobalVariables.useValues();
+  const Variables = Constants;
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const isFocused = useIsFocused();
   React.useEffect(() => {
     try {
@@ -33,7 +42,7 @@ const TestAutofillMarufScreen = props => {
   }, [isFocused]);
 
   return (
-    <ScreenContainer hasSafeArea={false} scrollable={false}>
+    <ScreenContainer scrollable={false} hasSafeArea={true}>
       <KeyboardAwareScrollView
         enableAutomaticScroll={false}
         enableOnAndroid={false}
@@ -56,6 +65,7 @@ const TestAutofillMarufScreen = props => {
           {/* Title */}
           <Text
             accessible={true}
+            selectable={false}
             style={StyleSheet.applyWidth(
               {
                 fontFamily: 'System',
@@ -71,6 +81,7 @@ const TestAutofillMarufScreen = props => {
           {/* Subtitle */}
           <Text
             accessible={true}
+            selectable={false}
             style={StyleSheet.applyWidth(
               {
                 fontFamily: 'System',
@@ -94,6 +105,7 @@ const TestAutofillMarufScreen = props => {
           {/* Error Message */}
           <Text
             accessible={true}
+            selectable={false}
             style={StyleSheet.applyWidth(
               {
                 color: theme.colors.background.danger,
@@ -111,6 +123,13 @@ const TestAutofillMarufScreen = props => {
             autoCapitalize={'none'}
             autoCorrect={true}
             changeTextDelay={500}
+            onChangeText={newEmailInputValue => {
+              try {
+                setEmail(newEmailInputValue);
+              } catch (err) {
+                console.error(err);
+              }
+            }}
             webShowOutline={true}
             autoComplete={'username'}
             keyboardType={'email-address'}
@@ -133,46 +152,24 @@ const TestAutofillMarufScreen = props => {
               dimensions.width
             )}
             textContentType={'emailAddress'}
+            value={email}
           />
           <Spacer left={8} right={8} bottom={12} top={12} />
-          {/* Password Input */}
-          <TextInput
-            autoCapitalize={'none'}
-            autoCorrect={true}
-            changeTextDelay={500}
-            webShowOutline={true}
-            autoComplete={'current-password'}
-            placeholder={'Password'}
-            secureTextEntry={true}
-            style={StyleSheet.applyWidth(
-              {
-                borderBottomWidth: 1,
-                borderColor: theme.colors.border.brand,
-                borderLeftWidth: 1,
-                borderRadius: 8,
-                borderRightWidth: 1,
-                borderTopWidth: 1,
-                fontFamily: 'System',
-                fontWeight: '400',
-                paddingBottom: 16,
-                paddingLeft: 16,
-                paddingRight: 16,
-                paddingTop: 16,
-              },
-              dimensions.width
-            )}
-          />
+          <Utils.CustomCodeErrorBoundary>
+            <CustomTextInput.Index
+              StyleSheet={StyleSheet}
+              theme={theme}
+              dimensions={dimensions}
+            />
+          </Utils.CustomCodeErrorBoundary>
           <Spacer left={8} right={8} bottom={24} top={24} />
           {/* Sign In Button */}
           <Button
             iconPosition={'left'}
             onPress={() => {
               try {
-                showAlertUtil({
-                  title: 'Done',
-                  message: undefined,
-                  buttonText: undefined,
-                });
+                /* hidden 'Open Browser' action */
+                navigation.navigate('HomepageGridScreen');
               } catch (err) {
                 console.error(err);
               }
@@ -204,11 +201,14 @@ const TestAutofillMarufScreen = props => {
               dimensions.width
             )}
           >
-            <Text accessible={true}>{'New User?'}</Text>
+            <Text accessible={true} selectable={false}>
+              {'New User?'}
+            </Text>
             <Spacer bottom={8} top={8} left={2} right={2} />
             {/* Sign Up Link */}
             <Link
               accessible={true}
+              selectable={false}
               style={StyleSheet.applyWidth(
                 { color: theme.colors.branding.primary },
                 dimensions.width
@@ -218,6 +218,25 @@ const TestAutofillMarufScreen = props => {
           </View>
         </View>
       </KeyboardAwareScrollView>
+
+      <View
+        style={StyleSheet.applyWidth(
+          { alignItems: 'center', flex: 1, justifyContent: 'center' },
+          dimensions.width
+        )}
+      >
+        <Text
+          accessible={true}
+          selectable={false}
+          {...GlobalStyles.TextStyles(theme)['Text'].props}
+          style={StyleSheet.applyWidth(
+            GlobalStyles.TextStyles(theme)['Text'].style,
+            dimensions.width
+          )}
+        >
+          {Constants['DONOTDELETE']}
+        </Text>
+      </View>
     </ScreenContainer>
   );
 };

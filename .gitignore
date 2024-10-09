@@ -10,6 +10,3 @@ npm-debug.*
 web-build/
 web-report/
 .DS_Store
-web-build/
-# Local Netlify folder
-.netlify

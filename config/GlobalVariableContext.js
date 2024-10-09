@@ -15,6 +15,7 @@ export const DeviceVariables = {
   AZURE_PROJECT_ID: 'babba09b-0cc3-4c75-b675-8e3595d54b2a',
   AZURE_REDIRECT_URL: 'msauth.com.crowdcharge.temp://auth',
   CALLTIME_GMAIL_TOKEN: '',
+  DONOTDELETE: 'This is gold',
   newuser: '',
   user: {},
   __env__: 'Development',

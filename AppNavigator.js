@@ -9,7 +9,9 @@ import Purchases from 'react-native-purchases';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { systemWeights } from 'react-native-typography';
 import LinkingConfiguration from './LinkingConfiguration';
+import HomepageGridScreen from './screens/HomepageGridScreen';
 import PaywallScreen from './screens/PaywallScreen';
+import RNKeychainScreen from './screens/RNKeychainScreen';
 import RevenueCatLoginScreen from './screens/RevenueCatLoginScreen';
 import TestAutofillMarufScreen from './screens/TestAutofillMarufScreen';
 import palettes from './themes/palettes';
@@ -92,6 +94,20 @@ export default function RootAppNavigator() {
           component={TestAutofillMarufScreen}
           options={({ navigation }) => ({
             title: 'Test autofill Maruf',
+          })}
+        />
+        <Stack.Screen
+          name="RNKeychainScreen"
+          component={RNKeychainScreen}
+          options={({ navigation }) => ({
+            title: 'RNKeychain',
+          })}
+        />
+        <Stack.Screen
+          name="HomepageGridScreen"
+          component={HomepageGridScreen}
+          options={({ navigation }) => ({
+            title: 'Homepage - Grid',
           })}
         />
       </Stack.Navigator>

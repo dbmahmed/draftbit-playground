@@ -26,6 +26,8 @@ const PaywallScreen = props => {
         }
         const testOfferings = await Purchases.getOfferings();
         setData(testOfferings?.current.availablePackages);
+        const infoRes = await Purchases.getCustomerInfo();
+        setUserData(infoRes);
       } catch (err) {
         console.error(err);
       }
@@ -38,6 +40,7 @@ const PaywallScreen = props => {
       <View>
         <Text
           accessible={true}
+          selectable={false}
           {...GlobalStyles.TextStyles(theme)['Text'].props}
           style={StyleSheet.applyWidth(
             GlobalStyles.TextStyles(theme)['Text'].style,
@@ -51,14 +54,16 @@ const PaywallScreen = props => {
       <View style={StyleSheet.applyWidth({ flex: 1 }, dimensions.width)}>
         <Text
           accessible={true}
+          selectable={false}
           {...GlobalStyles.TextStyles(theme)['Text'].props}
           style={StyleSheet.applyWidth(
             GlobalStyles.TextStyles(theme)['Text'].style,
             dimensions.width
           )}
         >
+          {JSON.stringify(userData)}
           {'\n\n\n\n\n\n\n\n\n\n\n\n\n\n'}
-          {Data.toString()}
+          {JSON.stringify(userData)}
           {'\n'}
         </Text>
       </View>
@@ -91,6 +96,7 @@ const PaywallScreen = props => {
                 <RevenueCatProductBlock data={listData} />
                 <Text
                   accessible={true}
+                  selectable={false}
                   {...GlobalStyles.TextStyles(theme)['Text'].props}
                   style={StyleSheet.applyWidth(
                     GlobalStyles.TextStyles(theme)['Text'].style,

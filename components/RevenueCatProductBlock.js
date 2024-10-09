@@ -49,6 +49,7 @@ const RevenueCatProductBlock = props => {
           {/* Text 2 */}
           <Text
             accessible={true}
+            selectable={false}
             {...GlobalStyles.TextStyles(theme)['Text'].props}
             style={StyleSheet.applyWidth(
               GlobalStyles.TextStyles(theme)['Text'].style,
@@ -60,6 +61,7 @@ const RevenueCatProductBlock = props => {
 
           <Text
             accessible={true}
+            selectable={false}
             {...GlobalStyles.TextStyles(theme)['Text'].props}
             style={StyleSheet.applyWidth(
               GlobalStyles.TextStyles(theme)['Text'].style,
