@@ -18,10 +18,13 @@ function renderLinkingPrefix() {
 const prefix = renderLinkingPrefix();
 
 const linking = {
-  enabled: Platform.OS === 'web' ? false : true,
+  enabled:  true,
   prefixes: [prefix],
   config: {
-    screens: {},
+    screens: {
+      MarufFacebookAuthScreen: '/web/',
+      HomepageGridScreen: '/web/home'
+    },
   },
 };
 
