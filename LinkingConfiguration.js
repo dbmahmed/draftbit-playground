@@ -9,7 +9,7 @@ import { Platform } from 'react-native';
 
 function renderLinkingPrefix() {
   try {
-    return Linking.createURL('/');
+    return Linking.createURL('/web/');
   } catch (e) {
     return 'draftbit://';
   }
@@ -18,25 +18,12 @@ function renderLinkingPrefix() {
 const prefix = renderLinkingPrefix();
 
 const linking = {
-  enabled: Platform.OS === 'web' ? false : true,
+  enabled:  true,
   prefixes: [prefix],
   config: {
     screens: {
-      HomepageGridScreen: {
-        screens: {
-          HomepageGridScreen: {
-            path: 'HomepageGridScreen',
-          },
-        },
-      },
-
-      TestAutofillMarufScreen: {
-        screens: {
-          TestAutofillMarufScreen: {
-            path: 'TestAutofillMarufScreen',
-          },
-        },
-      },
+      TestAutofillMarufScreen: '/web',
+      HomepageGridScreen: '/web/home'
     },
   },
 };
