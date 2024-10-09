@@ -9,7 +9,7 @@ import { Platform } from 'react-native';
 
 function renderLinkingPrefix() {
   try {
-    return Linking.createURL('/');
+    return Linking.createURL('/web/');
   } catch (e) {
     return 'draftbit://';
   }
@@ -22,7 +22,7 @@ const linking = {
   prefixes: [prefix],
   config: {
     screens: {
-      MarufFacebookAuthScreen: '/web/',
+      MarufFacebookAuthScreen: '/web',
       HomepageGridScreen: '/web/home'
     },
   },
