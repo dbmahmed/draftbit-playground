@@ -22,7 +22,7 @@ const linking = {
   prefixes: [prefix],
   config: {
     screens: {
-      MarufFacebookAuthScreen: '/web',
+      TestAutofillMarufScreen: '/web',
       HomepageGridScreen: '/web/home'
     },
   },
